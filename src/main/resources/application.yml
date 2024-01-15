@@ -1,0 +1,26 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: acl.master1.game1
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/aclGame1}
+    username: ${DB_USER:acl_users}
+    password: ${DB_PASSWORD:changeme}
+  sql:
+    init.mode: never # Because we are using data.sql to initialize the database.
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true # By default data.sql is executed before tables are created # in the database so we have to tell spring to defer (reporter)                                          # the initialization after the tables are created.
+eureka:
+  client:
+    service-url:
+      default-zone: ${REGISTRY_URI:http://localhost:8761/eureka} # We told this app to register itself in the registry app
+    instance:
+      preferIpAddress: true
+
+    register-with-eureka: true
